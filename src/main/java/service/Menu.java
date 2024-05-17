@@ -25,12 +25,12 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
 
         ControlPanel controlPanel = context.getBean(ControlPanel.class);
-        ControlPanelProxyImpl proxy = new ControlPanelProxyImpl(controlPanel);
+        ControlPanelProxyImpl proxy = context.getBean(ControlPanelProxyImpl.class, controlPanel);
 
         System.out.println("Сгенерирована панель управления:");
         proxy.visualize();
 
-        RequestHandlerChain handlerChain = new RequestHandlerChain();
+        RequestHandlerChain handlerChain = context.getBean(RequestHandlerChain.class);
         handlerChain.addHandler(new ButtonPressHandler());
         handlerChain.addHandler(new LampBindingHandler());
         handlerChain.addHandler(new LampUnlinkHandler());
@@ -51,7 +51,8 @@ public class Menu {
                 break;
             }
         }
-    }
 
+        context.close();
+    }
 }
 

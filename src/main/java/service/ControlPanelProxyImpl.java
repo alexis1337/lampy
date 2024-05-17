@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.Scanner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class ControlPanelProxyImpl implements ControlPanelProxy{
     private final ControlPanel controlPanel;
@@ -12,7 +11,6 @@ public class ControlPanelProxyImpl implements ControlPanelProxy{
     private final Map<String, String> cache; // Кэш для хранения результатов операций
     private boolean initialized = false;
 
-    @Autowired
     public ControlPanelProxyImpl(ControlPanel controlPanel) {
         this.controlPanel = controlPanel;
         this.logger = Logger.getLogger(ControlPanelProxyImpl.class.getName());
@@ -66,7 +64,6 @@ public class ControlPanelProxyImpl implements ControlPanelProxy{
     @Override
     public void requestLampUnlink() {
         Scanner scanner = new Scanner(System.in);
-        Menu menu = new Menu();
 
         int buttonX = Menu.requestIntegerInput(scanner, "Введите координату кнопки (X):");
         int buttonY = Menu.requestIntegerInput(scanner, "Введите координату кнопки (Y):");
