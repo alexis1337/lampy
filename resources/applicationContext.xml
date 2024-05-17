@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+    <bean id="menu" class="service.Menu" />
+
+    <bean id="controlPanel" class="service.ControlPanel">
+        <constructor-arg value="4"  />
+        <constructor-arg value="4"  />
+    </bean>
+
+    <bean id="buttonBuilder" class="service.ButtonBuilder" />
+
+    <aop:aspectj-autoproxy/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean id="loggingAspect" class="aspect.LoggingAspect"/>
+
+    <bean id="controlPanelProxy" class="service.ControlPanelProxyImpl">
+        <constructor-arg ref="controlPanel" />
+    </bean>
+
+    <!-- Конфигурация для обработчиков запросов -->
+
+    <bean id="buttonPressHandler" class="service.ButtonPressHandler" />
+
+    <bean id="lampBindingHandler" class="service.LampBindingHandler" />
+
+    <bean id="lampUnlinkHandler" class="service.LampUnlinkHandler" />
+
+    <!-- Конфигурация для цепочки обработчиков -->
+
+    <bean id="requestHandlerChain" class="service.RequestHandlerChain">
+        <property name="handlers">
+            <list>
+                <ref bean="buttonPressHandler" />
+                <ref bean="lampBindingHandler" />
+                <ref bean="lampUnlinkHandler" />
+            </list>
+        </property>
+    </bean>
+
+</beans>
